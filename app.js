@@ -6,12 +6,16 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
+var userRouter = require('./routes/userRouter');
+var distributorsRouter = require('./routes/distributorRoutes');
+var fruitsRouter = require('./routes/fruitRoutes');
+var uploadsRouter = require('./routes/uploadRoutes');
+var emailRouter = require('./routes/emailRoutes');
 const { config } = require('process');
 const database = require('./config/db')
 
 var app = express();
 
-// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
@@ -21,7 +25,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 app.use('/', indexRouter);
+app.use('/users', userRouter);
+app.use('/distributors', distributorsRouter);
+app.use('/fruits', fruitsRouter);
+app.use('/uploads', uploadsRouter);
+app.use('/sendmail', emailRouter);
+
 database.connect();
 
 // catch 404 and forward to error handler
